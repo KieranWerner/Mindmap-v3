@@ -424,27 +424,7 @@ export default function App() {
     }
     return up.reverse();
   }
-  function normAng(rad: number) {
-    const twoPi = Math.PI * 2;
-    let a = rad % twoPi;
-    if (a < 0) a += twoPi;
-    return a;
-  }
-  function getSiblingsClockwise(currentId: number): number[] {
-    const parentId = getParentId(currentId);
-    if (parentId == null) return [];
-    const parent = nodes.find((n) => n.id === parentId);
-    if (!parent) return [];
-    const siblings = getChildrenOf(parentId);
-    const withAngle = siblings.map((id) => {
-      const c = nodes.find((n) => n.id === id)!;
-      const theta = Math.atan2(c.y - parent.y, c.x - parent.x);
-      return { id, a: normAng(theta) };
-    });
-    // Uhrzeigersinn: absteigend (Canvas-Y wächst nach unten)
-    withAngle.sort((p, q) => q.a - p.a);
-    return withAngle.map((x) => x.id);
-  }
+
   function resizeNodeForLabel(n: MindNode): MindNode {
     const baseFont = clamp(Math.round(n.h * 0.35), 12, 20);
     const L = layoutLabel(n.label, baseFont, BASE_W);
