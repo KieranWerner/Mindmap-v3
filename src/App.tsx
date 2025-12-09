@@ -882,34 +882,41 @@ export default function App() {
          return;
       }
 
-      // Delete & Backspace
-      if (e.key === "Delete") {
-          if(hasNodeSel) removeNodes(Array.from(selectedIds));
-          else if(hasEdgeSel) removeEdges(Array.from(selectedEdgeIds));
-          return;
-      }
-      if (e.key === "Backspace") {
-         if (hasEdgeSel && !hasNodeSel) {
-             e.preventDefault(); pushHistory();
-             setEdges(prev => prev.map(ed => {
-                 if (!selectedEdgeIds.has(ed.id)) return ed;
-                 const txt = ed.label || "";
-                 return { ...ed, label: txt.slice(0, Math.max(0, txt.length - 1)) };
-             }));
-             return;
-         }
-         const ids = Array.from(selectedIds);
-         if (ids.length > 1) { removeNodes(ids); return; }
-         if (ids.length === 1) {
-             e.preventDefault(); pushHistory();
-             setNodes(prev => prev.map(n => {
-                 if(n.id!==ids[0]) return n;
-                 const next = n.label.slice(0, Math.max(0, n.label.length-1));
-                 return resizeNodeForLabel({...n, label:next});
-             }));
-             return;
-         }
-      }
+    // Delete & Backspace
+    if (e.key === "Delete") {
+      if(hasNodeSel) removeNodes(Array.from(selectedIds));
+      else if(hasEdgeSel) removeEdges(Array.from(selectedEdgeIds));
+      return;
+    }
+    if (e.key === "Backspace") {
+     // Shift+Backspace: löscht explizit selektierte Knoten
+     if (e.shiftKey) {
+       e.preventDefault();
+       const ids = Array.from(selectedIds);
+       if (ids.length > 0) { removeNodes(ids); }
+       return;
+     }
+     if (hasEdgeSel && !hasNodeSel) {
+       e.preventDefault(); pushHistory();
+       setEdges(prev => prev.map(ed => {
+         if (!selectedEdgeIds.has(ed.id)) return ed;
+         const txt = ed.label || "";
+         return { ...ed, label: txt.slice(0, Math.max(0, txt.length - 1)) };
+       }));
+       return;
+     }
+     const ids = Array.from(selectedIds);
+     if (ids.length > 1) { removeNodes(ids); return; }
+     if (ids.length === 1) {
+       e.preventDefault(); pushHistory();
+       setNodes(prev => prev.map(n => {
+         if(n.id!==ids[0]) return n;
+         const next = n.label.slice(0, Math.max(0, n.label.length-1));
+         return resizeNodeForLabel({...n, label:next});
+       }));
+       return;
+     }
+    }
 
       // Typing
       if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
@@ -998,7 +1005,7 @@ export default function App() {
         onImportClick={() => fileInputRef.current?.click()}
         onNewSite={() => {
           // Confirmation before clearing
-          const ok = typeof window !== "undefined" ? window.confirm("Alles löschen und neue Seite starten?") : true;
+          const ok = typeof window !== "undefined" ? window.confirm("Delete all and start a new page?") : true;
           if (!ok) return;
           // Clear all state and local storage
           setNodes([]);
