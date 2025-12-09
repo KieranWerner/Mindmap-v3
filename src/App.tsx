@@ -993,7 +993,30 @@ export default function App() {
       <HelpButton />
 
       {/* Toolbar */}
-      <Toolbar onExport={exportToFile} onImportClick={() => fileInputRef.current?.click()} />
+      <Toolbar
+        onExport={exportToFile}
+        onImportClick={() => fileInputRef.current?.click()}
+        onNewSite={() => {
+          // Clear all state and local storage
+          setNodes([]);
+          setEdges([]);
+          setSelectedId(null);
+          setSelectedIds(new Set());
+          setSelectedEdgeIds(new Set());
+          setClipboard(null);
+          // Reset pan/zoom to center
+          const svg = svgRef.current;
+          if (svg) {
+            const rect = svg.getBoundingClientRect();
+            setPan({ x: rect.width / 2, y: rect.height / 2 });
+          } else {
+            setPan({ x: typeof window !== "undefined" ? window.innerWidth / 2 : 0, y: typeof window !== "undefined" ? window.innerHeight / 2 : 0 });
+          }
+          setScale(1);
+          // Clear persisted storage
+          try { localStorage.removeItem(STORAGE_KEY); } catch {}
+        }}
+      />
       <input ref={fileInputRef} type="file" accept="application/json" style={{ display: "none" }} onChange={handleFileChange} />
 
       <svg

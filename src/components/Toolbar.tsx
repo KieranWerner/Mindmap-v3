@@ -1,9 +1,10 @@
 type ToolbarProps = {
   onExport: () => void;
   onImportClick: () => void;
+  onNewSite: () => void;
 };
 
-export function Toolbar({ onExport, onImportClick }: ToolbarProps) {
+export function Toolbar({ onExport, onImportClick, onNewSite }: ToolbarProps) {
   return (
     <div
       style={{
@@ -20,6 +21,20 @@ export function Toolbar({ onExport, onImportClick }: ToolbarProps) {
         border: "1px solid rgba(0,0,0,.06)",
       }}
     >
+      <button
+        onClick={onNewSite}
+        title="New Site"
+        style={{
+          padding: "4px 8px",
+          border: "1px solid rgba(0,0,0,.1)",
+          borderRadius: 8,
+          background: "#ffffff",
+          cursor: "pointer",
+          fontSize: 12,
+        }}
+      >
+        New Site
+      </button>
       <button
         onClick={onExport}
         style={{ border: "none", background: "transparent", cursor: "pointer" }}
