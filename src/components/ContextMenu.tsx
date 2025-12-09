@@ -143,6 +143,30 @@ export function ContextMenu({
                 />
               );
             })}
+            <button
+              onClick={() => {
+                if (contextMenu.targetNodeId != null) {
+                  const ids = Array.from(selectedIds.size ? selectedIds : new Set([contextMenu.targetNodeId]));
+                  onSetNodeColor(ids, "");
+                }
+                onClose();
+              }}
+              title="Farbe entfernen"
+              style={{
+                width: 28,
+                height: 20,
+                borderRadius: 999,
+                border: "1px solid rgba(15,23,42,.12)",
+                background: "linear-gradient(135deg, transparent 0%, transparent 47%, #ef4444 47%, #ef4444 53%, transparent 53%)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 14,
+              }}
+            >
+              ✕
+            </button>
           </div>
           <div style={{ height: 1, background: "rgba(15,23,42,.08)", margin: "6px 0" }} />
           <MenuItem
