@@ -997,6 +997,9 @@ export default function App() {
         onExport={exportToFile}
         onImportClick={() => fileInputRef.current?.click()}
         onNewSite={() => {
+          // Confirmation before clearing
+          const ok = typeof window !== "undefined" ? window.confirm("Alles löschen und neue Seite starten?") : true;
+          if (!ok) return;
           // Clear all state and local storage
           setNodes([]);
           setEdges([]);
