@@ -1174,14 +1174,6 @@ export default function App() {
             )
           );
         }}
-        onToggleEdgeArrow={(edgeId) => {
-          pushHistory();
-          setEdges((prev) =>
-            prev.map((ed) =>
-              ed.id === edgeId ? { ...ed, arrow: !ed.arrow } : ed
-            )
-          );
-        }}
         onRenameEdge={(edgeId) => {
           const ed = edges.find((x) => x.id === edgeId);
           const next = window.prompt("Label for edge:", ed?.label ?? "");

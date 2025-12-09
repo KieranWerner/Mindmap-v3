@@ -16,7 +16,6 @@ type ContextMenuProps = {
   onSetNodeColor: (ids: number[], color: string) => void;
   onRemoveNodes: (ids: number[]) => void;
   onToggleEdgeDashed: (edgeId: number) => void;
-  onToggleEdgeArrow: (edgeId: number) => void;
   onRenameEdge: (edgeId: number) => void;
   onRemoveEdges: (ids: number[]) => void;
   onUndo: () => void;
@@ -38,7 +37,6 @@ export function ContextMenu({
   onSetNodeColor,
   onRemoveNodes,
   onToggleEdgeDashed,
-  onToggleEdgeArrow,
   onRenameEdge,
   onRemoveEdges,
   onUndo,
