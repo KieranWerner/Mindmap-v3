@@ -23,7 +23,7 @@ export function Toolbar({ onExport, onImportClick, onNewSite }: ToolbarProps) {
     >
       <button
         onClick={onNewSite}
-        title="New Site"
+        title="New Page"
         style={{
           padding: "4px 8px",
           border: "1px solid rgba(0,0,0,.1)",
